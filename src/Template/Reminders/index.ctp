@@ -1,8 +1,10 @@
-<div class="jumbotron">
+<div class="jumbotron mt-4">
     <h1 class="display-4"><?= $event->name?></h1>
     <p class="lead"><?= $event->description?></p>
     <p><?=$event->start_date?> to <?= $event->end_date?></p>
 </div>
+
+<?= $this->element('navigation');?>
 
 <?php
 echo $this->Form->create(null);
@@ -26,13 +28,15 @@ foreach ($event->tracks as $track) {
                 }
 
                 echo $this->Form->control(
-                    'reminders.' . $talk->id . '.id',
+                    'reminders.' . $talk->id . '.talk_id',
                     [
                         'type' => 'checkbox',
                         'label' => $talkLabel,
+                        'value' => $talk->id,
                         'class' => 'mr-3',
                         'disabled' => (!$allow) ? 'disabled' : null,
-                        'escape' => false
+                        'escape' => false,
+                        'hiddenField' => false
                     ]
                 );
             ?></li>
@@ -43,6 +47,8 @@ foreach ($event->tracks as $track) {
 }
 
 
-echo $this->Form->control('phone_number', ['label' => 'Send me an SMS reminder', 'placeholder' => 'Your phone number']);
-echo $this->Form->button('Remind me ', ['class' => 'btn btn-primary']);
+echo $this->Form->control('phone_number', ['label' => 'Send me an SMS reminder', 'placeholder' => 'Your phone number', 'required' => true]);
+echo "<div class='offset-4 col-md-4'>";
+echo $this->Form->button('Remind me ', ['class' => 'btn btn-primary btn-block']);
+echo "</div>";
 echo $this->Form->end();

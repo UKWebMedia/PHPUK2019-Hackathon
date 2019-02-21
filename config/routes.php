@@ -47,6 +47,7 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/', ['controller' => 'Reminders', 'action' => 'index']);
+    $routes->connect('/view', ['controller' => 'Reminders', 'action' => 'view']);
 
 });
 

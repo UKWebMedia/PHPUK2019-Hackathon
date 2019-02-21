@@ -75,7 +75,7 @@ class JoindinShell extends Shell
 
     public function talks()
     {
-        $apiUrls['talks'] = 'https://api.joind.in/v2.1/events/7001/talks';
+        $apiUrls['talks'] = 'https://api.joind.in/v2.1/events/7001/talks?resultsperpage=40';
 
         $this->loadModel('Talks');
         $this->loadModel('Tracks');

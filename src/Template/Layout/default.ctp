@@ -27,8 +27,9 @@
             </div>
         </div>
     </div>
-    <footer class="row">
+    <footer class="row mt-4" style="background-color:#333;color:white">
         <div class="col-lg-12 text-center">
+            <p><?= $this->Html->image('https://comparisontech.com/wp-content/themes/comparisontech/img/ct-logo-standard-white.png', ['style' => 'width:200px;margin-top:15px;'])?></p>
             <p>Developed by Comparison Technologies</p>
             <p>David Yell <b>@yelldavid</b> &middot; Daniel Platt <b>@danielplatt</b></p>
         </div>
