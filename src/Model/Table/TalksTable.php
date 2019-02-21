@@ -73,9 +73,9 @@ class TalksTable extends Table
             ->maxLength('type', 255)
             ->allowEmptyString('type');
 
-        $validator
-            ->dateTime('start_date')
-            ->allowEmptyDateTime('start_date');
+//        $validator
+//            ->dateTime('start_date')
+//            ->allowEmptyDateTime('start_date');
 
         $validator
             ->integer('duration')
