@@ -34,6 +34,8 @@ class Application extends BaseApplication
      */
     public function bootstrap()
     {
+        $this->addPlugin('BootstrapUI');
+
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
@@ -52,7 +54,7 @@ class Application extends BaseApplication
          * Debug Kit should not be installed on a production system
          */
         if (Configure::read('debug')) {
-            Configure::write('DebugKit.forceEnable');
+            Configure::write('DebugKit.forceEnable', true);
             $this->addPlugin(\DebugKit\Plugin::class);
         }
     }
