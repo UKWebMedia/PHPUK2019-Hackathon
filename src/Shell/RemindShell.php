@@ -41,14 +41,17 @@ class RemindShell extends Shell
         // Filter all the reminders by whether the talk starts in the next five minutes
         $reminders->matching('Talks', function (Query $query) {
             return $query->where([
-                'Talks.start_time >=' => date('Y-m-d H:i:s'),
-                'Talks.start_time <=' => date('Y-m-d H:i:s', strtotime('+5 minutes'))
+                'Talks.start_time >=' => date('Y-m-d H:i:s', strtotime('-5 minutes')),
+                'Talks.start_time <=' => date('Y-m-d H:i:s')
             ]);
         });
 
         foreach ($reminders as $reminder) {
             // TODO: Send message to $reminder->phone_number via Nexmo
+            $this->success('✅ Sent reminder message.');
             // TODO: Delete reminder record once sent to prevent duplicate sends, or mark record as sent
         }
+
+        $this->out('👍 All done.');
     }
 }
