@@ -6,6 +6,20 @@ use Nexmo\Client;
 
 class Message
 {
+    const FLOOR_DESIGN = "Sub-ground";
+    const FLOOR_VELOCITY = "Sub-ground";
+    const FLOOR_MAIN = "Upstairs";
+    const FLOOR_MENTION_ME = "Ground";
+    const FLOOR_CHIP = "Upstairs";
+    const FLOOR_SOCIAL = "Social";
+
+    const TRACK_DESIGN = "Design Track";
+    const TRACK_VELOCITY = "Velocity Track";
+    const TRACK_MAIN = "Main";
+    const TRACK_MENTION_ME = "Mention Me Track";
+    const TRACK_CHIP = "Chip Track";
+    const TRACK_SOCIAL = "Social";
+
     /** @var Client */
     private $client;
 
