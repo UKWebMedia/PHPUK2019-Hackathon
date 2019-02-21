@@ -1,6 +1,7 @@
 <?php
 namespace App\Shell;
 
+use App\Lib\Message;
 use Cake\Console\Shell;
 
 /**
@@ -30,6 +31,8 @@ class TestMessageShell extends Shell
      */
     public function main()
     {
-        $this->out($this->OptionParser->help());
+        $message = new Message();
+        $message->reminder("447540846166", "Awesome PHP", "Remind Me", "Infinte Floor", new \DateTime("+5 minutes"));
+        $this->out("Sent");
     }
 }

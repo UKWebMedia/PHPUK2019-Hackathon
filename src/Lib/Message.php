@@ -17,12 +17,12 @@ class Message
     public function reminder(string $phoneNumber, string $talkName, string $track, string $floor, \DateTime $startTime)
     {
         $difference = $startTime->diff(new \DateTime());
-        $minutes = $difference->format('i');
+        $minutes = $difference->format('%i');
 
         $message = $this->client->message()->send([
             'to' => $phoneNumber,
             'from' => 'Reminder Service',
-            'text' => 'Reminder: ' .$talkName . ' is starting in ' . $minutes . '. The room is ' . $track . ' which can be found on ' . $floor,
+            'text' => 'Reminder: "' .$talkName . '" is starting in ' . $minutes . ' minutes. The room is "' . $track . '" which can be found on ' . $floor . ".",
         ]);
     }
 
