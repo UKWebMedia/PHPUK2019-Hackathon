@@ -1,7 +1,7 @@
 <div class="jumbotron mt-4">
     <h1 class="display-4"><?= $event->name?></h1>
     <p class="lead"><?= $event->description?></p>
-    <p><?=$event->start_date?> to <?= $event->end_date?></p>
+    <p><?= $event->start_date->format('D j F y') ?> to <?= $event->end_date->format('D j F Y') ?></p>
 </div>
 
 <?= $this->element('navigation');?>

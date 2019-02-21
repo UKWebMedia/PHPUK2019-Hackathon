@@ -66,7 +66,7 @@ class RemindersController extends AppController
                 ->contain(['Talks'])
                 ->where(['phone_number' => $this->getRequest()->getData('phone_number')]);
 
-            if (!$reminders) {
+            if ($reminders->isEmpty()) {
                 $this->Flash->error('No reminders found for this phone number.');
                 return $this->redirect(['action' => 'view']);
             }

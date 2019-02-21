@@ -11,7 +11,7 @@ echo $this->Form->button('Submit', ['class' => 'btn btn-primary']);
 <hr>
 
 <?php
-if (!$reminders->isEmpty()) {
+if (isset($reminders) && !$reminders->isEmpty()) {
     echo "<ul class='list-unstyled'>";
     foreach ($reminders as $reminder) {
         echo "<li>";

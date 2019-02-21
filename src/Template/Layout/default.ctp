@@ -19,10 +19,10 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <div class="row">
             <div class="col-md-12">
+                <?= $this->Flash->render() ?>
                 <?= $this->fetch('content') ?>
             </div>
         </div>
