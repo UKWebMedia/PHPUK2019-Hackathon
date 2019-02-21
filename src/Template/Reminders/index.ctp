@@ -7,7 +7,7 @@
 <?php
 echo $this->Form->create(null);
 
-$now = new DateTime();
+$now = new \Cake\I18n\FrozenTime();
 
 foreach ($event->tracks as $track) {
     ?>
@@ -18,23 +18,23 @@ foreach ($event->tracks as $track) {
         <?php
          $allow = $talk->start_date > $now;
          ?>
-            <li style="<?php if (!$allow) { echo "text-decoration: line-through;"; } ?>""><?php
-
+            <li <?= !$allow ? 'style="color:#ccc"' : null?>>
+                <?php
                 $talkLabel = $talk->start_date->format('D H:i') . ' - ' . $talk->talk_title;
                 if (!empty($talk->speakers)) {
                     $talkLabel .= ' with ' . $talk->speakers[0]['speaker_name'];
                 }
 
-                if ($allow) {
-                    echo $this->Form->control(
-                        'reminders.' . $talk->id . '.id',
-                        [
-                            'type' => 'checkbox',
-                            'label' => $talkLabel,
-                            'class' => 'mr-3'
-                        ]
-                    );
-                }
+                echo $this->Form->control(
+                    'reminders.' . $talk->id . '.id',
+                    [
+                        'type' => 'checkbox',
+                        'label' => $talkLabel,
+                        'class' => 'mr-3',
+                        'disabled' => (!$allow) ? 'disabled' : null,
+                        'escape' => false
+                    ]
+                );
             ?></li>
         <?php endforeach;?>
         </ul>

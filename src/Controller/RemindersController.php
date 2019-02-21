@@ -30,7 +30,7 @@ class RemindersController extends AppController
             ->first();
 
         if ($this->getRequest()->is('post')) {
-
+            var_dump($this->getRequest()->getData());
         }
 
         $this->set('event', $event);
