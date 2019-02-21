@@ -32,7 +32,7 @@ class TestMessageShell extends Shell
     public function main()
     {
         $message = new Message();
-        $message->reminder("447540846166", "Awesome PHP", "Remind Me", "Infinte Floor", new \DateTime("+5 minutes"));
+        $message->reminder("447540846166", "Unconference", Message::TRACK_DESIGN, Message::FLOOR_DESIGN, new \DateTime("2019-02-22 14:45"));
         $this->out("Sent");
     }
 }
