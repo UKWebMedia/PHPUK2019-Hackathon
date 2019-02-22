@@ -1,6 +1,8 @@
 <?php
 namespace App\Shell;
 
+use App\Lib\Message;
+use App\Model\Entity\Reminder;
 use Cake\Console\Shell;
 use Cake\ORM\Query;
 
@@ -46,10 +48,20 @@ class RemindShell extends Shell
             ]);
         });
 
+        $messageSender = new Message();
+
+        /** @var Reminder $reminder */
         foreach ($reminders as $reminder) {
-            // TODO: Send message to $reminder->phone_number via Nexmo
-            $this->success('✅ Sent reminder message.');
-            // TODO: Delete reminder record once sent to prevent duplicate sends, or mark record as sent
+            $talk = $reminder->talk;
+            $start =  new \DateTime($talk->start_date->format(\DateTime::ATOM));
+            $success = $messageSender->reminder($reminder->phone_number, $talk->talk_title, $talk->track->track_name, $start);
+
+            if ($success) {
+                $this->success('✅ Sent reminder message.');
+                $this->Reminders->delete($reminder);
+            } else {
+                $this->err('X Sent reminder message.');
+            }
         }
 
         $this->out('👍 All done.');

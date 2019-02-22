@@ -40,10 +40,15 @@ class Message
         $this->generateClient();
     }
 
-    public function reminder(string $phoneNumber, string $talkName, string $track, \DateTime $startTime)
+    public function reminder(string $phoneNumber, string $talkName, string $track, \DateTime $startTime): bool
     {
         $difference = $startTime->diff(new \DateTime());
-        $minutes = $difference->format('%i');
+
+        if ($difference->format("%h")) {
+            $minutes = $difference->format('%h hours and %i minutes');
+        } else {
+            $minutes = $difference->format('%i minutes');
+        }
 
         if (isset(self::FLOORS[$track])) {
             $floor = self::FLOORS[$track];
@@ -51,11 +56,17 @@ class Message
             $floor = self::FLOOR_MENTION_ME;
         }
 
+        var_dump('Reminder: "' .$talkName . '" is starting in ' . $minutes . '. The room is "' . $track . '" which can be found on ' . $floor . " floor.");
+        die;
+
+
         $message = $this->client->message()->send([
             'to' => $phoneNumber,
             'from' => 'Reminder Service',
             'text' => 'Reminder: "' .$talkName . '" is starting in ' . $minutes . ' minutes. The room is "' . $track . '" which can be found on ' . $floor . " floor.",
         ]);
+
+        return true;
     }
 
     private function generateClient()
