@@ -7,7 +7,7 @@ use Cake\Console\Shell;
 /**
  * TestMessage shell command.
  */
-class TestMessageShell extends Shell
+class CronMessageShell extends Shell
 {
 
     /**
@@ -32,7 +32,7 @@ class TestMessageShell extends Shell
     public function main()
     {
         $message = new Message();
-        $message->reminder("447540846166", "Unconference", Message::TRACK_DESIGN, Message::FLOOR_DESIGN, new \DateTime("2019-02-22 14:45"));
+        $message->reminder("447540846166", "Unconference", Message::TRACK_DESIGN, new \DateTime("2019-02-22 14:45"));
         $this->out("Sent");
     }
 }

@@ -12,13 +12,25 @@ class Message
     const FLOOR_MENTION_ME = "Ground";
     const FLOOR_CHIP = "Upstairs";
     const FLOOR_SOCIAL = "Social";
+    const FLOOR_WORKSHOP = "In another building";
 
     const TRACK_DESIGN = "Design Track";
     const TRACK_VELOCITY = "Velocity Track";
-    const TRACK_MAIN = "Main";
+    const TRACK_MAIN = "Main Track";
     const TRACK_MENTION_ME = "Mention Me Track";
     const TRACK_CHIP = "Chip Track";
     const TRACK_SOCIAL = "Social";
+    const TRACK_WORKSHOP = "Workshop Track";
+
+    const FLOORS = [
+        self::TRACK_DESIGN => self::FLOOR_DESIGN,
+        self::TRACK_VELOCITY => self::FLOOR_VELOCITY,
+        self::TRACK_MAIN => self::FLOOR_MAIN,
+        self::TRACK_MENTION_ME => self::FLOOR_MENTION_ME,
+        self::TRACK_SOCIAL => self::FLOOR_SOCIAL,
+        self::TRACK_CHIP => self::FLOOR_CHIP,
+        self::TRACK_WORKSHOP => self::FLOOR_WORKSHOP,
+    ];
 
     /** @var Client */
     private $client;
@@ -28,15 +40,21 @@ class Message
         $this->generateClient();
     }
 
-    public function reminder(string $phoneNumber, string $talkName, string $track, string $floor, \DateTime $startTime)
+    public function reminder(string $phoneNumber, string $talkName, string $track, \DateTime $startTime)
     {
         $difference = $startTime->diff(new \DateTime());
         $minutes = $difference->format('%i');
 
+        if (isset(self::FLOORS[$track])) {
+            $floor = self::FLOORS[$track];
+        } else {
+            $floor = self::FLOOR_MENTION_ME;
+        }
+
         $message = $this->client->message()->send([
             'to' => $phoneNumber,
             'from' => 'Reminder Service',
-            'text' => 'Reminder: "' .$talkName . '" is starting in ' . $minutes . ' minutes. The room is "' . $track . '" which can be found on ' . $floor . ".",
+            'text' => 'Reminder: "' .$talkName . '" is starting in ' . $minutes . ' minutes. The room is "' . $track . '" which can be found on ' . $floor . " floor.",
         ]);
     }
 
