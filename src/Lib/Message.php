@@ -12,20 +12,24 @@ class Message
     const FLOOR_MENTION_ME = "Ground";
     const FLOOR_CHIP = "Upstairs";
     const FLOOR_SOCIAL = "Social";
+    const FLOOR_WORKSHOP = "In another building";
 
     const TRACK_DESIGN = "Design Track";
     const TRACK_VELOCITY = "Velocity Track";
-    const TRACK_MAIN = "Main";
+    const TRACK_MAIN = "Main Track";
     const TRACK_MENTION_ME = "Mention Me Track";
     const TRACK_CHIP = "Chip Track";
     const TRACK_SOCIAL = "Social";
+    const TRACK_WORKSHOP = "Workshop Track";
 
     const FLOORS = [
         self::TRACK_DESIGN => self::FLOOR_DESIGN,
         self::TRACK_VELOCITY => self::FLOOR_VELOCITY,
         self::TRACK_MAIN => self::FLOOR_MAIN,
         self::TRACK_MENTION_ME => self::FLOOR_MENTION_ME,
-        self::TRACK_CHIP => self::FLOOR_SOCIAL,
+        self::TRACK_SOCIAL => self::FLOOR_SOCIAL,
+        self::TRACK_CHIP => self::FLOOR_CHIP,
+        self::TRACK_WORKSHOP => self::FLOOR_WORKSHOP,
     ];
 
     /** @var Client */
