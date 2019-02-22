@@ -54,13 +54,13 @@ class RemindShell extends Shell
         foreach ($reminders as $reminder) {
             $talk = $reminder->talk;
             $start =  new \DateTime($talk->start_date->format(\DateTime::ATOM));
-            $success = $messageSender->reminder($reminder->phone_number, $talk->talk_title, $talk->track->track_name, $start);
+            $success = $messageSender->reminder($reminder->phone_number, $talk->talk_title, $reminder->talk->tracks[0]['track_name'], $start);
 
             if ($success) {
                 $this->success('✅ Sent reminder message.');
                 $this->Reminders->delete($reminder);
             } else {
-                $this->err('X Sent reminder message.');
+                $this->err('❌ Sent reminder message.');
             }
         }
 
