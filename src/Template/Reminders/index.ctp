@@ -13,7 +13,7 @@ $now = new \Cake\I18n\FrozenTime();
 
 foreach ($event->tracks as $track) {
     ?>
-    <div class="col">
+    <div>
         <h3><?= $track->track_name;?></h3>
         <ul class="list-unstyled">
         <?php foreach ($track->talks as $talk): ?>
