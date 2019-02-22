@@ -14,7 +14,11 @@ echo $this->Form->button('Submit', ['class' => 'btn btn-primary']);
 if (isset($reminders) && !$reminders->isEmpty()) {
     echo "<ul class='list-unstyled'>";
     foreach ($reminders as $reminder) {
-        echo "<li>";
+        $style = '';
+        if ($reminder->talk->start_date->isPast()) {
+            $style = 'color:#ccc';
+        }
+        echo "<li style='$style'>";
         echo $reminder->talk->start_date->format('D H:i');
         echo ' - ';
         echo $reminder->talk->talk_title;
