@@ -20,6 +20,14 @@ class Message
     const TRACK_CHIP = "Chip Track";
     const TRACK_SOCIAL = "Social";
 
+    const FLOORS = [
+        self::TRACK_DESIGN => self::FLOOR_DESIGN,
+        self::TRACK_VELOCITY => self::FLOOR_VELOCITY,
+        self::TRACK_MAIN => self::FLOOR_MAIN,
+        self::TRACK_MENTION_ME => self::FLOOR_MENTION_ME,
+        self::TRACK_CHIP => self::FLOOR_SOCIAL,
+    ];
+
     /** @var Client */
     private $client;
 
@@ -28,15 +36,21 @@ class Message
         $this->generateClient();
     }
 
-    public function reminder(string $phoneNumber, string $talkName, string $track, string $floor, \DateTime $startTime)
+    public function reminder(string $phoneNumber, string $talkName, string $track, \DateTime $startTime)
     {
         $difference = $startTime->diff(new \DateTime());
         $minutes = $difference->format('%i');
 
+        if (isset(self::FLOORS[$track])) {
+            $floor = self::FLOORS[$track];
+        } else {
+            $floor = self::FLOOR_MENTION_ME;
+        }
+
         $message = $this->client->message()->send([
             'to' => $phoneNumber,
             'from' => 'Reminder Service',
-            'text' => 'Reminder: "' .$talkName . '" is starting in ' . $minutes . ' minutes. The room is "' . $track . '" which can be found on ' . $floor . ".",
+            'text' => 'Reminder: "' .$talkName . '" is starting in ' . $minutes . ' minutes. The room is "' . $track . '" which can be found on ' . $floor . " floor.",
         ]);
     }
 
