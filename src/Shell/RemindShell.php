@@ -43,7 +43,7 @@ class RemindShell extends Shell
         // Filter all the reminders by whether the talk starts in the next five minutes
         $reminders->matching('Talks', function (Query $query) {
             return $query->where([
-                'Talks.start_time >=' => date('Y-m-d H:i:s', strtotime('-5 minutes')),
+                'Talks.start_time >=' => date('Y-m-d H:i:s', strtotime('-5 days')),
                 'Talks.start_time <=' => date('Y-m-d H:i:s')
             ]);
         });

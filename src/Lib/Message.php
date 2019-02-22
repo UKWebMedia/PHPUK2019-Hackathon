@@ -55,7 +55,7 @@ class Message
         } else {
             $floor = self::FLOOR_MENTION_ME;
         }
-        
+
         $message = $this->client->message()->send([
             'to' => $phoneNumber,
             'from' => 'Reminder Service',
