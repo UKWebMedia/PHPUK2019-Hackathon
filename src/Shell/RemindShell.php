@@ -4,6 +4,7 @@ namespace App\Shell;
 use App\Lib\Message;
 use App\Model\Entity\Reminder;
 use Cake\Console\Shell;
+use Cake\Log\Log;
 use Cake\ORM\Query;
 
 /**
@@ -38,15 +39,15 @@ class RemindShell extends Shell
         $this->loadModel('Reminders');
 
         $reminders = $this->Reminders->find()
-            ->contain(['Talks']);
-
-        // Filter all the reminders by whether the talk starts in the next five minutes
-        $reminders->matching('Talks', function (Query $query) {
-            return $query->where([
-                'Talks.start_time >=' => date('Y-m-d H:i:s', strtotime('-5 days')),
-                'Talks.start_time <=' => date('Y-m-d H:i:s')
+            ->contain(['Talks'])
+            ->where([
+                'Talks.start_date >=' => date('Y-m-d H:i:s', strtotime('-5 days')),
+                'Talks.start_date <=' => date('Y-m-d H:i:s')
             ]);
-        });
+
+        if ($reminders->isEmpty()) {
+            $this->abort('No reminders found.');
+        }
 
         $messageSender = new Message();
 
@@ -54,7 +55,10 @@ class RemindShell extends Shell
         foreach ($reminders as $reminder) {
             $talk = $reminder->talk;
             $start =  new \DateTime($talk->start_date->format(\DateTime::ATOM));
-            $success = $messageSender->reminder($reminder->phone_number, $talk->talk_title, $reminder->talk->tracks[0]['track_name'], $start);
+
+            $number = $this->formatNumber($reminder->phone_number);
+
+            $success = $messageSender->reminder($number, $talk->talk_title, $reminder->talk->tracks[0]['track_name'], $start);
 
             if ($success) {
                 $this->success('✅ Sent reminder message.');
@@ -65,5 +69,24 @@ class RemindShell extends Shell
         }
 
         $this->out('👍 All done.');
+    }
+
+    /**
+     * Format numbers into E.164 format
+     *
+     * @see https://developer.nexmo.com/voice/voice-api/guides/numbers
+     * @param string $telephoneNumber
+     * @return string
+     */
+    private function formatNumber(string $telephoneNumber)
+    {
+        if (substr($telephoneNumber, 0, 1) == 0) {
+            $telephoneNumber = ltrim($telephoneNumber, 0);
+            $telephoneNumber = '44' . $telephoneNumber;
+
+            return $telephoneNumber;
+        }
+
+        return $telephoneNumber;
     }
 }
